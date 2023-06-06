@@ -15,12 +15,18 @@ import sys
 import tempfile
 import os
 import subprocess
+import re
 
 # don't really limit the graph
 MAX_DEPTH = sys.getrecursionlimit() - 1
 
 
+def _clean_md_header(text):
+    return re.sub('[^A-Za-z0-9_\-\"\[\]:> \']', '', text)
+
 # this section from
+
+
 class CallGraph:
 
     def __init__(self, root=None):
@@ -245,7 +251,11 @@ class CallGraph:
 
                         # don't add link if another already exists
                         if not current_base_link in existing_base_links:
-                            link = '{src_node} --> {dst_node}'.format(src_node=src_node, dst_node=dst_node)
+                            # clean node names
+                            src_node = _clean_md_header(src_node)
+                            dst_node = _clean_md_header(dst_node)
+                            link = '{src_node} --> {dst_node}'.format(src_node=src_node,
+                                                                      dst_node=dst_node).replace('`', ' ')
                             links[link] = 1
                             existing_base_links.add(current_base_link)
                         # else:
@@ -492,7 +502,8 @@ called_flow_ends = called_graph.gen_mermaid_flow_graph(
 
 print(calling_flow)
 print(calling_flow_ends)
-
+print(gen_mermaid_url(calling_graph.gen_mermaid_flow_graph(
+    shaded_nodes=calling_graph.get_endpoints(), wrap_mermaid=False), edit=True))
 
 charts = [['calling', calling_flow], ['calling_ends', calling_flow_ends],
           ['called', called_flow], ['called_ends', called_flow_ends]]
