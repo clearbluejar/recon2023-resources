@@ -509,4 +509,11 @@ for chart_type, chart_data in charts:
     print(file_path)
 
     # open callgraph with vscode
-    subprocess.call(['code', file_path], shell=True)
+    if os.path.exists('/tmp'):
+        # linux or mac
+        shell = False
+    else:
+        # windows
+        shell = True
+
+    subprocess.call(['code', file_path], shell=shell)
