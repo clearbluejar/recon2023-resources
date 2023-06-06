@@ -1,11 +1,11 @@
 # markdown callgraph gen
-#@author @clearbluejar
-#@category PdiffInDark
-#@keybinding 
-#@menupath Tools.vscode.diffmatch
-#@toolbar function_graph2.png
+# @author @clearbluejar
+# @category PdiffInDark
+# @keybinding
+# @menupath Tools.vscode.diffmatch
+# @toolbar function_graph2.png
 
-#TODO Add User Code Here
+# TODO Add User Code Here
 
 import time
 import base64
@@ -20,8 +20,7 @@ import subprocess
 MAX_DEPTH = sys.getrecursionlimit() - 1
 
 
-
-# this section from 
+# this section from
 class CallGraph:
 
     def __init__(self, root=None):
@@ -51,7 +50,7 @@ class CallGraph:
 
     def print_graph(self):
         for src, dst in self.graph.items():
-            print("{src}-->{dst}".format(src=src,dst=dst))
+            print("{src}-->{dst}".format(src=src, dst=dst))
 
     def root_at_end(self):
         """
@@ -130,7 +129,7 @@ class CallGraph:
 
         return count
 
-    def gen_mermaid_flow_graph(self, direction=None, shaded_nodes = None, shade_color='#339933', max_display_depth=None, endpoint_only=False, wrap_mermaid=False):
+    def gen_mermaid_flow_graph(self, direction=None, shaded_nodes=None, shade_color='#339933', max_display_depth=None, endpoint_only=False, wrap_mermaid=False):
         """
         Generate MermaidJS flowchart from self.graph
         See https://mermaid.js.org/syntax/flowchart.html
@@ -154,7 +153,7 @@ class CallGraph:
         if not direction:
 
             if len(self.graph) < 350:
-                direction = 'TD'            
+                direction = 'TD'
             else:
                 direction = 'LR'
 
@@ -174,7 +173,7 @@ class CallGraph:
                 endpoints = self.get_endpoints()
 
                 if len(endpoints) > 15:
-                    #switch direction to LR so that are visible
+                    # switch direction to LR so that are visible
                     direction = 'LR'
 
                 for i, end in enumerate(endpoints):
@@ -190,9 +189,11 @@ class CallGraph:
                         root_style_class = ''
 
                     if self.root_at_end():
-                        link = '{i}["{end}"]{end_style_class} --> root["{root}"]{root_style_class}'.format(i=i, end=end, end_style_class=end_style_class,root=self.root,root_style_class=root_style_class )
+                        link = '{i}["{end}"]{end_style_class} --> root["{root}"]{root_style_class}'.format(
+                            i=i, end=end, end_style_class=end_style_class, root=self.root, root_style_class=root_style_class)
                     else:
-                        link = 'root["{root}"]{root_style_class} --> {i}["{end}"]{end_style_class}'.format(i=i, end=end, end_style_class=end_style_class,root=self.root,root_style_class=root_style_class )
+                        link = 'root["{root}"]{root_style_class} --> {i}["{end}"]{end_style_class}'.format(
+                            i=i, end=end, end_style_class=end_style_class, root=self.root, root_style_class=root_style_class)
 
                     links[link] = 1
 
@@ -224,19 +225,23 @@ class CallGraph:
                         if node_keys.get(src) is None:
                             node_keys[src] = node_count
                             node_count += 1
-                            src_node = '{node_key_src}["{src}"]{src_style_class}'.format(node_key_src=node_keys[src],src=src, src_style_class=src_style_class)
+                            src_node = '{node_key_src}["{src}"]{src_style_class}'.format(
+                                node_key_src=node_keys[src], src=src, src_style_class=src_style_class)
                         else:
-                            src_node = '{node_key_src}{src_style_class}'.format(node_key_src=node_keys[src],src_style_class=src_style_class)
+                            src_node = '{node_key_src}{src_style_class}'.format(
+                                node_key_src=node_keys[src], src_style_class=src_style_class)
 
                         if node_keys.get(fname) is None:
                             node_keys[fname] = node_count
                             node_count += 1
-                            dst_node = '{node_key_fname}["{fname}"]{dst_style_class}'.format(node_key_fname=node_keys[fname], fname=fname, dst_style_class=dst_style_class)
+                            dst_node = '{node_key_fname}["{fname}"]{dst_style_class}'.format(
+                                node_key_fname=node_keys[fname], fname=fname, dst_style_class=dst_style_class)
                         else:
-                            dst_node = '{node_key_fname}{dst_style_class}'.format(node_key_fname=node_keys[fname], dst_style_class=dst_style_class)
+                            dst_node = '{node_key_fname}{dst_style_class}'.format(
+                                node_key_fname=node_keys[fname], dst_style_class=dst_style_class)
 
                         # record base link
-                        current_base_link = '{src} --> {node_base}'.format(src=src,node_base=node[0])
+                        current_base_link = '{src} --> {node_base}'.format(src=src, node_base=node[0])
 
                         # don't add link if another already exists
                         if not current_base_link in existing_base_links:
@@ -285,7 +290,7 @@ class CallGraph:
 
             if not row[0] in current_level_names:
                 spaces = (depth+1)*'  '
-                rows.append("{spaces}{row_base}".format(spaces=spaces,row_base=row[0]))
+                rows.append("{spaces}{row_base}".format(spaces=spaces, row_base=row[0]))
                 last_depth = depth
                 current_level_names.append(row[0])
 
@@ -306,7 +311,7 @@ def get_called_funcs_memo(f):
 
 
 # Recursively calling to build calling graph
-def get_calling(f, cgraph = CallGraph(), depth = 0, visited = None, verbose=False, include_ns=True, start_time=None, max_run_time=None, max_depth=MAX_DEPTH):
+def get_calling(f, cgraph=CallGraph(), depth=0, visited=None, verbose=False, include_ns=True, start_time=None, max_run_time=None, max_depth=MAX_DEPTH):
     """
     Build a call graph of all calling functions
     Traverses depth first
@@ -336,7 +341,7 @@ def get_calling(f, cgraph = CallGraph(), depth = 0, visited = None, verbose=Fals
 
         # calling loop
         if verbose:
-            print("{space} - LOOOOP {name}".format(space=space,name=f.getName(include_ns)))
+            print("{space} - LOOOOP {name}".format(space=space, name=f.getName(include_ns)))
 
         return cgraph
 
@@ -351,7 +356,7 @@ def get_calling(f, cgraph = CallGraph(), depth = 0, visited = None, verbose=Fals
         for c in calling:
 
             if verbose:
-                print("{space} - {name}".format(space=space,name=c.getName(include_ns)))
+                print("{space} - {name}".format(space=space, name=c.getName(include_ns)))
 
             # Add calling edge
             cgraph.add_edge(c.getName(include_ns), f.getName(include_ns), depth)
@@ -360,7 +365,7 @@ def get_calling(f, cgraph = CallGraph(), depth = 0, visited = None, verbose=Fals
             cgraph = get_calling(c, cgraph, depth, visited=visited, start_time=start_time, max_run_time=max_run_time)
     else:
         if verbose:
-            print('{space} - END for {name}'.format(space=space,name=f.name))
+            print('{space} - END for {name}'.format(space=space, name=f.name))
 
     return cgraph
 
@@ -372,7 +377,7 @@ def func_is_external(f):
 # Recursively calling to build called graph
 
 
-def get_called(f, cgraph = CallGraph(), depth = 0, visited = None, verbose=False, include_ns=True, start_time=None, max_run_time=None, max_depth=MAX_DEPTH):
+def get_called(f, cgraph=CallGraph(), depth=0, visited=None, verbose=False, include_ns=True, start_time=None, max_run_time=None, max_depth=MAX_DEPTH):
     """
     Build a call graph of all called functions
     Traverses depth first
@@ -402,7 +407,7 @@ def get_called(f, cgraph = CallGraph(), depth = 0, visited = None, verbose=False
 
         # calling loop
         if verbose:
-            print("{space} - LOOOOP {name}".format(space=space,name=f.getName(include_ns)))
+            print("{space} - LOOOOP {name}".format(space=space, name=f.getName(include_ns)))
 
         return cgraph
 
@@ -421,7 +426,7 @@ def get_called(f, cgraph = CallGraph(), depth = 0, visited = None, verbose=False
             for c in called:
 
                 if verbose:
-                    print("{space} - {name}".format(space=space,name=c.getName(include_ns)))
+                    print("{space} - {name}".format(space=space, name=c.getName(include_ns)))
 
                 # Add called edge
                 if func_is_external(c):
@@ -464,10 +469,11 @@ def gen_mermaid_url(graph, edit=False):
 
     return url
 
+
 try:
-  current_address = currentLocation.getFunctionEntryPoint()
-except:  
-  current_address = currentLocation.getFunctionAddress()
+    current_address = currentLocation.getFunctionEntryPoint()
+except:
+    current_address = currentLocation.getFunctionAddress()
 
 func = currentProgram.getFunctionManager().getFunctionAt(current_address)
 
@@ -476,27 +482,28 @@ print(func)
 calling_graph = get_calling(func)
 called_graph = get_called(func)
 
-calling_flow = calling_graph.gen_mermaid_flow_graph(shaded_nodes=calling_graph.get_endpoints(),wrap_mermaid=True)
-calling_flow_ends = calling_graph.gen_mermaid_flow_graph(shaded_nodes=calling_graph.get_endpoints(),wrap_mermaid=True,endpoint_only=True)
-called_flow = called_graph.gen_mermaid_flow_graph(shaded_nodes=called_graph.get_endpoints(),wrap_mermaid=True)
-called_flow_ends = called_graph.gen_mermaid_flow_graph(shaded_nodes=called_graph.get_endpoints(),wrap_mermaid=True,endpoint_only=True)
+calling_flow = calling_graph.gen_mermaid_flow_graph(shaded_nodes=calling_graph.get_endpoints(), wrap_mermaid=True)
+calling_flow_ends = calling_graph.gen_mermaid_flow_graph(
+    shaded_nodes=calling_graph.get_endpoints(), wrap_mermaid=True, endpoint_only=True)
+called_flow = called_graph.gen_mermaid_flow_graph(shaded_nodes=called_graph.get_endpoints(), wrap_mermaid=True)
+called_flow_ends = called_graph.gen_mermaid_flow_graph(
+    shaded_nodes=called_graph.get_endpoints(), wrap_mermaid=True, endpoint_only=True)
 
 
 print(calling_flow)
 print(calling_flow_ends)
 
 
-charts = [['calling', calling_flow], ['calling_ends',calling_flow_ends],['called', called_flow], ['called_ends',called_flow_ends]]
+charts = [['calling', calling_flow], ['calling_ends', calling_flow_ends],
+          ['called', called_flow], ['called_ends', called_flow_ends]]
 
-for chart_type,chart_data in charts:
+for chart_type, chart_data in charts:
 
-    file_name = '{}-{}-{}.md'.format(chart_type,func.getName(False),func.getEntryPoint())
+    file_name = '{}-{}-{}.md'.format(chart_type, func.getName(False), func.getEntryPoint())
     temp_dir = tempfile.gettempdir()
     file_path = str(os.path.join(temp_dir, file_name))
 
-
-
-    with open(file_path,'wb') as f:
+    with open(file_path, 'wb') as f:
         f.write(chart_data)
 
     print(file_path)
