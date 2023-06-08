@@ -11,6 +11,10 @@
 - [VS Code Diff settings.json](vscode/settings.json)
 - [ghidra_scripts](ghidra_scripts/)
 
+## VM Option
+
+- [lubuntu-22.04-patch-diff-dark.ova](https://drive.google.com/file/d/1047X50u3XLSRwwI6L2XeNu2YvZe1sko8/view?usp=sharing)
+
 # Exercise 1 - CVE-2023-21768
 
 - vulnerable (N-1): [afd.sys.10.0.22621.1028](CVE-2023-21768/afd.sys.10.0.22621.1028)
