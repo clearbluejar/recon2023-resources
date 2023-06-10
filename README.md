@@ -8,7 +8,8 @@
   - [PatchDiffCorrelator](https://github.com/clearbluejar/ghidra-patchdiff-correlator/releases)
     - [Install Instructions](https://github.com/clearbluejar/ghidra-patchdiff-correlator#how-do-i-install-it)
 - [VS code](https://code.visualstudio.com/download)
-- [VS Code Diff settings.json](vscode/settings.json)
+  - [VS Code Diff settings.json](vscode/settings.json) (optional)
+  - Install VS code [mermaidjs preview](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) (optional)
 - [ghidra_scripts](ghidra_scripts/)
 
 ## VM Option
@@ -42,3 +43,4 @@
 - patched: [com.whatsapp.2.22.16.12.libwhatsapp.so](CVE-2022-36934/com.whatsapp.2.22.16.12.libwhatsapp.so)
 - Ghidra Analyzed Project
   - [CVE-2022-36934.gar](https://github.com/clearbluejar/recon2023-resources/releases/download/v1.0.0/CVE-2022-36934.gar)
+  - [CVE-2022-36934_2023_06_10.gar](https://github.com/clearbluejar/recon2023-resources/releases/download/v1.0.0/CVE-2022-36934_2023_06_10.gar) (with completed VT session)
